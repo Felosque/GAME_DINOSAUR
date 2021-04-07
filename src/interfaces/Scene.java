@@ -10,6 +10,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import logic.Game;
+import logic.objects.Cloud;
 import logic.objects.Dino;
 
 public class Scene extends JPanel implements KeyListener, Runnable{
@@ -24,6 +25,9 @@ public class Scene extends JPanel implements KeyListener, Runnable{
 	private JLabel dinoLabel;
 	
 	private Dino dino;
+	
+	private JLabel cloudLabel;
+	private Cloud cloud;
 	
 	private Thread h1;
 	
@@ -40,6 +44,12 @@ public class Scene extends JPanel implements KeyListener, Runnable{
 		dino = main.getGame().getDino();
 		dino.setX(60);
 		dino.setY(main.getSize().height + 200 );
+		
+		cloud = new Cloud();
+		cloud.setX(main.getSize().width + 500);
+		cloud.setY(main.getSize().height + 5);
+		cloudLabel = new JLabel(cloud.getSprite());
+		this.add(cloudLabel);
 		
 		dinoLabel = new JLabel(mainWindow.getGame().getDino().getSprite());
 		this.add(dinoLabel, BorderLayout.CENTER);
@@ -113,7 +123,16 @@ public class Scene extends JPanel implements KeyListener, Runnable{
 					 mainWindow.getGame().setJumpBlock(false);
 				 }
 			 }
+			 
 			 dinoLabel.setBounds(dino.getX(), dino.getY(), 70, 70);
+			 
+			 if (counterJump > 0) {
+				 cloud.setX(cloud.getX() - 1);
+				 cloudLabel.setBounds(cloud.getX(), cloud.getY(), 80, 100);	
+			 }	
+			 
+			 
+			 
 			 System.out.println(dino.getX() + " - " +  dino.getY());
 		  try {
 			  Thread.sleep(1);
